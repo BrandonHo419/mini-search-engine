@@ -27,12 +27,16 @@ void Indexer::addDocument(const std::string& filename) {
 
 
     std::string word;
+    int total = 0;
     while (file >> word) {
         std::string clean = normalizeWord(word);
-        if (!clean.empty())
-            invertedIndex[clean].insert(filename);
+        if (clean.empty()) continue;
+        
+        invertedIndex[clean][filename]++;
+        total++;
     }
 
+    docLen[filename] = total;
     file.close();
 }
 
@@ -42,23 +46,21 @@ void Indexer::buildIndex(const std::vector<std::string>& files) {
     }
 }
 
-std::set<std::string> Indexer::searchWord(const std::string& word) const {
+std::unordered_map<std::string, int> Indexer::searchWord(const std::string& word) const {
     std::string clean = normalizeWord(word);
 
-    if(invertedIndex.find(clean) != invertedIndex.end()){
-        return invertedIndex.at(clean);
-    }else{
-        return std::set<std::string>();
-    }
+    auto it = invertedIndex.find(clean);
+    if( it != invertedIndex.end()) return it->second;
+    return {};
 }
 
 void Indexer::printIndex() const {
-   for(auto it = invertedIndex.begin(); it != invertedIndex.end(); it++){
-    std::cout<< it->first << " : ";
-    for(auto docIt = it->second.begin(); docIt != it->second.end(); docIt++){
-        std::cout<< *docIt << " ";
-    }
+   for(auto& [term, postings] :  invertedIndex){
+    std::cout<< term<< ": ";
+        for(auto& [doc, freq] : postings){
+            std::cout<< "(" << doc << freq << ")";
+        }
 
-    std::cout<< "\n";
+        std::cout << "\n";
    }
 }
