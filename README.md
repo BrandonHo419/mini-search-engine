@@ -1,2 +1,3 @@
 # mini-search-engine
-A condensed search engine demonstrating the use of various data structures and algorithms.
+A condensed search engine that allows for searching through a collection of text files using a command-line-interface (CLI) for key queries. 
+Supports search features like  Term Frequency-Inverse Document Frequency (TF-IDF), prefix searches, basic stemming and more. 
