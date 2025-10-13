@@ -28,14 +28,18 @@ void Indexer::addDocument(const std::string& filename) {
 
     std::string word;
     int total = 0;
+
+    // reads each word from the file 
     while (file >> word) {
         std::string clean = normalizeWord(word);
         if (clean.empty()) continue;
         
+        // the key is the word and frequency is added to the inner unordered_map
         invertedIndex[clean][filename]++;
         total++;
     }
 
+    // updates the total words for each doc
     docLen[filename] = total;
     file.close();
 }

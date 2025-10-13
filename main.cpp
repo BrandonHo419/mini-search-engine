@@ -8,7 +8,7 @@
 int main() {
     std::cout << "=== Mini Search Engine CLI ===\n";
 
-    // Add your files here
+    // Add your files here (will change soon)
     std::vector<std::string> files = {
         "testfile1.txt",
         "testfile2.txt"
@@ -18,14 +18,14 @@ int main() {
     std::cout << "Index built successfully!\n";
 
     while (true) {
-        std::cout << "\nEnter search query (or 'exit' to quit): ";
+        std::cout << "\nEnter search query (press 'x' to quit): ";
         std::string query;
         std::getline(std::cin, query);
 
-        if (query == "exit") break;
+        if (query == "x") break;
         if (query.empty()) continue;
 
-        // Get ranked results
+        // results will be ranked 
         auto results = searchQuery(query);
 
         if (results.empty()) {
@@ -39,7 +39,7 @@ int main() {
                 std::cout << i + 1 << ". " << doc 
                           << " | Total words: " << totalWords << "\n";
 
-                // Optional: show frequency of each query word in this doc
+                // just shows additional information like frequency of query for each doc
                 std::istringstream iss(query);
                 std::string word;
                 std::cout << "   Matches: ";

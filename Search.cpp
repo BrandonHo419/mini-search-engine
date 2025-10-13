@@ -13,13 +13,13 @@ std::vector<std::string> searchQuery(const std::string& query) {
     std::map<std::string, double> docScores;  // filename -> TF-IDF score
 
     int totalDocs = globalIndexer.getTotalDoc(); 
-
+    
     while (iss >> word) {
-        std::string clean = word; // optional: can normalize here again
-        auto results = globalIndexer.searchWord(word); // unordered_map<string,int>
+        std::string clean = word; 
+        auto results = globalIndexer.searchWord(word);
         if (results.empty()) continue;
 
-        int df = results.size(); // number of documents containing the word
+        int df = results.size();
         double idf = std::log(1.0 * totalDocs / df); // Inverse Document Frequency
 
         for (auto& [filename, freq] : results) {

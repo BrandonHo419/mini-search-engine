@@ -8,8 +8,10 @@
 
 class Indexer {
 private:
-  
+    // main structure of the engine: key - word, inner key - doc name, value - frequency 
     std::unordered_map<std::string, std::unordered_map<std::string, int>> invertedIndex;
+
+    // to store length of each doc
     std::unordered_map<std::string, int> docLen;
 
     // helper: normalize words (lowercase + strip punctuation)
@@ -22,6 +24,8 @@ public:
     void printIndex() const;
 
     int getTotalDoc() { return docLen.size();};
+
+    // getters
     std::unordered_map<std::string, std::unordered_map<std::string, int>>& getIndex()  {return invertedIndex;};
     std::unordered_map<std::string, int>& getDocLen() {return docLen;};
 }; 
