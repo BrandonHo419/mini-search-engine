@@ -1,3 +1,6 @@
+#ifndef PREFIX_SEARCHER_HPP 
+#define PREFIX_SEARCHER_HPP
+
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -97,3 +100,5 @@ public:
     return postings;
   }
 };
+
+#endif
