@@ -1,36 +1,39 @@
-#include "Index.h"
 #include <iostream>
+#include <string>
 #include <vector>
-#include <set>
+#include "Index.h"
+#include "Search.h"
 
 int main() {
-    Indexer indexer;
+    std::cout << "=== Mini Search Engine CLI ===\n";
 
-    // List of files to index
-    std::vector<std::string> files = {"testfile1.txt"};
+    std::vector<std::string> files = {
+        "testfile1.txt",
+        "testfile2.txt"
+    };
 
-    // Build the index
-    indexer.buildIndex(files);
+    globalIndexer.buildIndex(files);
+    std::cout << "Index built successfully!\n";
 
-    // Print the entire index
-    std::cout << "Full Index:\n";
-    indexer.printIndex();
+    while (true) {
+        std::cout << "\nEnter search query (or 'exit' to quit): ";
+        std::string query;
+        std::getline(std::cin, query);
 
-    // Test searching for a word
-    std::string searchWord;
-    std::cout << "\nEnter a word to search: ";
-    std::cin >> searchWord;
+        if (query == "exit") break;
+        if (query.empty()) continue;
 
-    std::set<std::string> results = indexer.searchWord(searchWord);
-    if (!results.empty()) {
-        std::cout << "Found in files: ";
-        for (const auto& f : results) {
-            std::cout << f << " ";
+        auto results = searchQuery(query);
+
+        if (results.empty()) {
+            std::cout << "No results found.\n";
+        } else {
+            std::cout << "Search results:\n";
+            for (auto& doc : results)
+                std::cout << "- " << doc << "\n";
         }
-        std::cout << "\n";
-    } else {
-        std::cout << "Word not found in any file.\n";
     }
 
+    std::cout << "Goodbye!\n";
     return 0;
 }
