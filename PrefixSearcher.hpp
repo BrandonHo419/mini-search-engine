@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -11,30 +10,34 @@ int charToIndex(char c) { return c - 'a'; }
 struct TrieNode {
   TrieNode* children[ALPHABET_SIZE];
   bool isEndOfWord;
-  vector<pair<int, int>> postings;  // store (docID, freq)
+  vector<pair<string, int>> postings;
 
   TrieNode() : isEndOfWord(false) {
     fill(children, children + ALPHABET_SIZE, nullptr);
   }
 
-  ~TrieNode() {};
+  ~TrieNode() {
+    for (int i = 0; i < ALPHABET_SIZE; ++i) {
+      if (children[i]) delete children[i];
+    }
+  }
 };
 
 class PrefixSearcher {
- private:
+private:
   TrieNode* root;
 
   void suggestionsRec(TrieNode* node, string currPrefix,
-                      vector<string>& suggestions) {
+                      vector<string>& suggestions) const { // MARKED CONST
     if (node->isEndOfWord) suggestions.push_back(currPrefix);
     for (int i = 0; i < ALPHABET_SIZE; i++) {
       if (node->children[i])
         suggestionsRec(node->children[i], currPrefix + char('a' + i),
                        suggestions);
     }
-  };
+  }
 
-  void collectPostingsRec(TrieNode* node, vector<pair<int, int>>& postings) {
+  void collectPostingsRec(TrieNode* node, vector<pair<string, int>>& postings) const { // MARKED CONST
     if (node->isEndOfWord)
       postings.insert(postings.end(), node->postings.begin(),
                       node->postings.end());
@@ -43,18 +46,18 @@ class PrefixSearcher {
     }
   }
 
-  bool isLastNode(TrieNode* node) {
+  bool isLastNode(TrieNode* node) const { // MARKED CONST
     for (int i = 0; i < ALPHABET_SIZE; i++) {
       if (node->children[i]) return false;
-      return true;
     }
+    return true;
   }
 
- public:
+public:
   PrefixSearcher() { root = new TrieNode; }
-  PrefixSearcher() { /*use a recursive delete*/ }
+  ~PrefixSearcher() { delete root; }
 
-  void insert(const string& key, const pair<int, int>& posting) {
+  void insert(const string& key, const pair<string, int>& posting) {
     TrieNode* pCrawl = root;
     for (char c : key) {
       int index = charToIndex(c);
@@ -62,39 +65,35 @@ class PrefixSearcher {
       pCrawl = pCrawl->children[index];
     }
     pCrawl->isEndOfWord = true;
-    pCrawl->postings.push_back(posting);  // acumulate all the postings
+    pCrawl->postings.push_back(posting);
   }
 
-  vector<string> getSuggestions(const string& prefix) {
+  vector<string> getSuggestions(const string& prefix) const { // MARKED CONST
     TrieNode* pCrawl = root;
     for (char c : prefix) {
       int index = charToIndex(c);
-      if (!pCrawl->children[index]) return {};  // no prefix
+      if (!pCrawl->children[index]) return {};
       pCrawl = pCrawl->children[index];
     }
     vector<string> suggestions;
     if (isLastNode(pCrawl)) {
       if (pCrawl->isEndOfWord) suggestions.push_back(prefix);
-      return suggestions;  // or -1 flag as in source
+      return suggestions;
     }
     suggestionsRec(pCrawl, prefix, suggestions);
     return suggestions;
   }
 
-  vector<pair<int, int>> searchPrefix(
-      string& prefix) {  // merge postings from matching terms
-    // this will be similar but itll collect the merged postings
+  vector<pair<string, int>> searchPrefix(string& prefix) const { // MARKED CONST
     TrieNode* pCrawl = root;
-
     for (char c : prefix) {
       int index = charToIndex(c);
-      if (!pCrawl->children[index]) return {};  // No prefix
+      if (!pCrawl->children[index]) return {};
       pCrawl = pCrawl->children[index];
     }
-    vector<pair<int, int>> postings;
+    vector<pair<string, int>> postings;
     collectPostingsRec(pCrawl, postings);
-    // sort and unique after
-
+    sort(postings.begin(), postings.end());
     return postings;
   }
 };
