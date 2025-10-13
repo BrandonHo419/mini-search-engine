@@ -16,7 +16,7 @@ bool operator<(const Result& a, const Result& b) {
   return a.score < b.score;
 };  // max-heap
 
-vector<pair<int, double>> processQuery(string& query, invertedIndex& index,
+vector<pair<int, double>> processQuery(string& query, Indexer& index,
                                        PrefixSearcher& prefixSearcher,
                                        int topK) {
   bool isPrefix = (query.back() == '*');
@@ -29,13 +29,14 @@ vector<pair<int, double>> processQuery(string& query, invertedIndex& index,
     candidates = exact.search(cleanQuery, index);  // Default AND
   }
   unordered_map<int, double> scores;
-  int N = index.getTotalDocs();  // Assume method
+  int N = index.getTotalDoc();  // Assume method
   for (auto& p : candidates) {
     int docID = p.first, freq = p.second;
-    double tf = freq / static_cast<double>(index.getDocLength(docID));
-    double idf = std::log(N / static_cast<double>(index.getDocFreq(
-                                  query)));  // Approx for multi-term
-    scores[docID] += tf * idf;               // Accumulate for multi-term
+    double tf = freq / static_cast<double>(index.getTotalDoc());
+    double idf = std::log(
+        N / static_cast<double>(index.getDocFreq(  // ts pmo :wilted_rose:
+                query)));                          // Approx for multi-term
+    scores[docID] += tf * idf;                     // Accumulate for multi-term
   }
 
   // Rank with priority_queue (max-heap for top-K)

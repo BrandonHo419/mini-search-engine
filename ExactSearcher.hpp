@@ -4,9 +4,9 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace std;
+#include "Index.h"
 
-class invertedIndex;
+using namespace std;
 
 class ExactSearcher {
  private:
