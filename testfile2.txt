@@ -1,3 +1,1 @@
-Alice Alice Alice the quick brown fox jumps over the lazy dog.
-This sentence contains every letter in the English alphabet.
-Typing this sentence is often used to practice keyboard skills.
+A quick brown fox leaps over a lazy hound.
