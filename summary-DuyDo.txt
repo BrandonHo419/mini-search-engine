@@ -3,6 +3,6 @@ I performed several critical fixes and upgrades to the search engine. I integrat
 query_processor.hpp to correctly parse and sequentially apply the explicit AND, OR, and NOT operations, relying on new 
 intersectPostings and unionPostings functions I added to ExactSearcher.hpp to manage document sets precisely. Additionally, 
 I fixed the original functional bugs by ensuring the searchPhrase logic correctly enforced positional checks between adjacent
-words. Finally, I addressed stability by adding header guards to PrefixSearcher.hpp to resolve redefinition errors, marked all 
-read-only methods as const to ensure class integrity, and instructed the use of the C++17 standard flag for successful compilation
-of modern C++ syntax. 
+words. Finally, I addressed stability by adding header guards to PrefixSearcher.hpp to resolve redefinition errors and marked all 
+read-only methods as const to ensure class integrity. I worked well with my team when brainstorming ideas and how to implement them
+writing functions in ExactSearcher.hpp and fixing other bugs.
