@@ -5,4 +5,4 @@ intersectPostings and unionPostings functions I added to ExactSearcher.hpp to ma
 I fixed the original functional bugs by ensuring the searchPhrase logic correctly enforced positional checks between adjacent
 words. Finally, I addressed stability by adding header guards to PrefixSearcher.hpp to resolve redefinition errors, marked all 
 read-only methods as const to ensure class integrity, and instructed the use of the C++17 standard flag for successful compilation
-of modern C++ syntax.
+of modern C++ syntax. 
