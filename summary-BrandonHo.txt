@@ -1,0 +1,6 @@
+Brandon Ho -a1926054
+
+I created an initial prototype of the searchers (ExactSearcher, PrefixSearcher and the query_processor). These work efficiently relying on an index for efficient document travelling utilising hashmap and vector of pairs following term frequency and inverse document frequnecy.
+The ExactSearcher class was supposed to handle single and multi-term queries by tokenising the inputs, fetching the postings and merging them using AND/OR in an efficient manner. 
+While the query_processor conducts the retrieval and ranks them using the TF-IDF scores for top-K utilising a priority_queue.
+The prefixsearcher which I added searches and gets data through the Prefix by utilising a Trie data structure.
