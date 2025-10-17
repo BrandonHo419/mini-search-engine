@@ -109,12 +109,11 @@ public:
           const auto& pos_current = it_current->second.second; // Positions of tokens[i-1]
           const auto& pos_next = it_next->second.second;     // Positions of tokens[i]
           
-          bool match = false;
+
           for (int pos : pos_current) {
             // Check for phrase match: pos of next word must be pos_current + 1
             if (find(pos_next.begin(), pos_next.end(), pos + 1) != pos_next.end()) {
               phraseResult.emplace_back(p.first, p.second);
-              match = true;
               break;
             }
           }

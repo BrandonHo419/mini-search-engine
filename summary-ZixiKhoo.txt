@@ -1,0 +1,27 @@
+Zixi Khoo -a1925025
+Throughout this project, i played a significant role in the design and implementation phases of our
+mini search engine project. Initially, i was actively contributing ot the brainstorming section
+and collaborated with my team to refine a project idea.
+
+I was responsible for the development of the Index class which is one of the three key components of the search engine. 
+The index class provides means to index and organise the text documents efficiently by reading the files, tokenising words, 
+and building an inverted index that maps each keyword to the documents, along with the frequencies and position 
+within the document. This is what allows the search engine to efficiently find words within the text documents.
+To create this, i had to first design the core structure of the engine, the index, and implement functions to support features
+around it. The index was a hashmap with a string key and another hashmap as its value. The inner hashmap is to store the frequency
+of the word inside a document which had the document name as the key and an int for the frequency. This was then changed to support
+the extra snippet feature by incorporating a pair as the value fo the inner hashmap, which stored the frequency and the position of 
+the word within the document. The hashmap was the clear choice for the chosen data structure as it allowed efficient lookups along
+with associative data, making it the best choice for the inverted index.
+
+With this, i then created the necessary functions to generate the index for the required files, search words and 
+generate snippets around query terms for users to see. This also involved creating support functions to normalise words 
+and retrieve certain data like frequency. The whole process required planning and time to fully implement and what i found worked
+was breaking the requirements into smaller components as well as just doing some research on how to use the differen data structures.
+I was also involved with designing the main.cpp with my teammates which is the command line interface that the user interacts with to utilise the search engine.
+This included the information that would be displayed and the general format as well as how the user would interact with the engine. 
+
+Throughout the weeks, our team was good with delegating tasks to ensure that the project can be efficiently completed, with each 
+team member always having a task to do. What could have worked better was our time organisation as each member was unavailable 
+at different times which made the timeline for the project to become longer than expected. Other than that, it was fun to 
+be working on this project and i was able to extend my experience with actually coding something and knowledge of data structures.

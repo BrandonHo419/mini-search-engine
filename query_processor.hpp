@@ -124,7 +124,7 @@ vector<pair<string, double>> processQuery(string& query, Indexer& index,
     priority_queue<Result> heap;
     for (auto& s : scores) heap.push({s.first, s.second});
     vector<pair<string, double>> ranked;
-    while (!heap.empty() && ranked.size() < topK) {
+    while (!heap.empty() && ranked.size() < static_cast<size_t>(topK)) {
         auto top = heap.top();
         heap.pop();
         ranked.emplace_back(top.docID, top.score);
